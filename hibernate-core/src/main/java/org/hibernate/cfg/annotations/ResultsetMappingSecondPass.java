@@ -199,7 +199,7 @@ public class ResultsetMappingSecondPass implements QuerySecondPass {
 				columnReturns.add(
 						new NativeSQLQueryScalarReturn(
 								mappings.getObjectNameNormalizer().normalizeIdentifierQuoting( columnResult.name() ),
-								null
+								mappings.getTypeResolver().heuristicType(columnResult.name())
 						)
 				);
 			}
