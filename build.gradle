@@ -40,9 +40,9 @@ buildscript {
 }
 
 ext {
-    expectedGradleVersion = '1.9'
+    expectedGradleVersion = '2.0'
     hibernateTargetVersion = '5.0.0-SNAPSHOT'
-    javaLanguageLevel = '1.6'
+    javaLanguageLevel = '1.8'
 
     osgiExportVersion = hibernateTargetVersion.replaceAll( "-SNAPSHOT", ".SNAPSHOT" )
 }
@@ -208,7 +208,7 @@ subprojects { subProject ->
 	}
 
 	jar {
-		manifest = osgiManifest {
+		manifest {
 			// GRADLE-1411: Even if we override Imports and Exports
 			// auto-generation with instructions, classesDir and classpath
 			// need to be here (temporarily).
@@ -274,7 +274,7 @@ subprojects { subProject ->
 				}
 			}
 			downloadSources = true
-			scopes.COMPILE.plus += configurations.provided
+			scopes.COMPILE.plus += [configurations.provided]
 		}
 	}
 
@@ -311,11 +311,11 @@ subprojects { subProject ->
 				classpath: configurations.animalSniffer.asPath
 		)
 
-		ant.animalSniffer(
-				signature: "$buildDir/javaApiSignature/javaApi.signature",
-				classpath: sourceSets.main.compileClasspath.asPath) {
-			path( path: sourceSets.main.output.classesDir )
-		}
+//		ant.animalSniffer(
+//				signature: "$buildDir/javaApiSignature/javaApi.signature",
+//				classpath: sourceSets.main.compileClasspath.asPath) {
+//			path( path: sourceSets.main.output.classesDir )
+//		}
 	}
 
 	// specialized API/SPI checkstyle tasks ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

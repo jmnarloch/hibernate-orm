@@ -33,6 +33,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.hibernate.transform.ResultTransformer;
 import org.hibernate.type.Type;
@@ -281,6 +282,24 @@ public interface Query extends BasicQueryContract {
 	 * @return the result list
 	 */
 	public List list();
+
+    /**
+     * Returns the query result as a {@link java.util.stream.Stream}.
+     * The stream operates on the loaded data, so each individual record
+     * will be loaded into memory as a result of invoking this method.
+     *
+     * @return the result stream
+     */
+    public Stream<?> stream();
+
+    /**
+     * Returns the query result as a {@link java.util.stream.Stream}.
+     * The stream operates on the loaded data, so each individual record
+     * will be loaded into memory as a result of invoking this method.
+     *
+     * @return the result stream
+     */
+    public Stream<?> parallelStream();
 
 	/**
 	 * Convenience method to return a single instance that matches

@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.hibernate.CacheMode;
 import org.hibernate.FlushMode;
@@ -966,7 +967,15 @@ public abstract class AbstractQueryImpl implements Query {
 		return uniqueElement( list() );
 	}
 
-	static Object uniqueElement(List list) throws NonUniqueResultException {
+    public Stream<?> stream() {
+        return list().stream();
+    }
+
+    public Stream<?> parallelStream() {
+        return list().parallelStream();
+    }
+
+    static Object uniqueElement(List list) throws NonUniqueResultException {
 		int size = list.size();
 		if (size==0) return null;
 		Object first = list.get(0);
