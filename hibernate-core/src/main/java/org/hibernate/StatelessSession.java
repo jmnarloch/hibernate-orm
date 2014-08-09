@@ -25,6 +25,7 @@ package org.hibernate;
 
 import java.io.Serializable;
 import java.sql.Connection;
+import java.util.Optional;
 
 /**
  * A command-oriented API for performing bulk operations against a database.
@@ -138,6 +139,48 @@ public interface StatelessSession extends SharedSessionContract {
 	 * @return a detached entity instance
 	 */
 	public Object get(Class entityClass, Serializable id, LockMode lockMode);
+
+    /**
+     * Retrieves a row.
+     *
+     * @param entityName The name of the entity to retrieve
+     * @param id The id of the entity to retrieve
+     *
+     * @return a detached entity instance
+     */
+    public Optional<?> getOptional(String entityName, Serializable id);
+
+    /**
+     * Retrieves a row.
+     *
+     * @param entityClass The class of the entity to retrieve
+     * @param id The id of the entity to retrieve
+     *
+     * @return a detached entity instance
+     */
+    public Optional<?> getOptional(Class entityClass, Serializable id);
+
+    /**
+     * Retrieves a row, obtaining the specified lock mode.
+     *
+     * @param entityName The name of the entity to retrieve
+     * @param id The id of the entity to retrieve
+     * @param lockMode The lock mode to apply to the entity
+     *
+     * @return a detached entity instance
+     */
+    public Optional<?> getOptional(String entityName, Serializable id, LockMode lockMode);
+
+    /**
+     * Retrieves a row, obtaining the specified lock mode.
+     *
+     * @param entityClass The class of the entity to retrieve
+     * @param id The id of the entity to retrieve
+     * @param lockMode The lock mode to apply to the entity
+     *
+     * @return a detached entity instance
+     */
+    public Optional<?> getOptional(Class entityClass, Serializable id, LockMode lockMode);
 
 	/**
 	 * Refresh the entity instance state from the database.

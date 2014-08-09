@@ -26,18 +26,7 @@ package org.hibernate.internal;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.hibernate.CacheMode;
 import org.hibernate.FlushMode;
@@ -966,7 +955,11 @@ public abstract class AbstractQueryImpl implements Query {
 		return uniqueElement( list() );
 	}
 
-	static Object uniqueElement(List list) throws NonUniqueResultException {
+    public Optional<?> optionalResult() {
+        return Optional.ofNullable(uniqueResult());
+    }
+
+    static Object uniqueElement(List list) throws NonUniqueResultException {
 		int size = list.size();
 		if (size==0) return null;
 		Object first = list.get(0);

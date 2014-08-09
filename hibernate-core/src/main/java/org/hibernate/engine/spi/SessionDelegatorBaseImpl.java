@@ -28,6 +28,7 @@ import java.sql.Connection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.hibernate.CacheMode;
 import org.hibernate.Criteria;
@@ -686,7 +687,27 @@ public class SessionDelegatorBaseImpl implements SessionImplementor, Session {
 		return session.get( entityName, id, lockOptions );
 	}
 
-	@Override
+    @Override
+    public Optional<?> getOptional(Class clazz, Serializable id) {
+        return session.getOptional(clazz, id);
+    }
+
+    @Override
+    public Optional<?> getOptional(Class clazz, Serializable id, LockOptions lockOptions) {
+        return session.getOptional(clazz, id, lockOptions);
+    }
+
+    @Override
+    public Optional<?> getOptional(String entityName, Serializable id) {
+        return session.getOptional(entityName, id);
+    }
+
+    @Override
+    public Optional<?> getOptional(String entityName, Serializable id, LockOptions lockOptions) {
+        return session.getOptional(entityName, id, lockOptions);
+    }
+
+    @Override
 	public String getEntityName(Object object) {
 		return session.getEntityName( object );
 	}

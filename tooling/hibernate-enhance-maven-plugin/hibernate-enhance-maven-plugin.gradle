@@ -9,14 +9,14 @@ repositories {
     mavenCentral()
 }
 
-processResources.doLast {
-    project.build.outputDirectory = '${project.build.outputDirectory}'
-    copy {
-        from 'src/main/resources'
-        into processResources.destinationDir
-        expand ([ version: version, project: project, dir: '${dir}' ])
-    }
-}
+//processResources.doLast {
+//    project.build.outputDirectory = '${project.build.outputDirectory}'
+//    copy {
+//        from 'src/main/resources'
+//        into processResources.destinationDir
+//        expand ([ version: version, project: project, dir: '${dir}' ])
+//    }
+//}
 
 dependencies {
     compile( libraries.maven_plugin ) { transitive = false }
@@ -67,42 +67,42 @@ def generateMavenDependency(String gradleDependency) {
             + "</dependency>\n"
 }
 
-task writeNewPom(type:Task, description: 'Writes pom.xml using merged Gradle dependency and MavenPom configuration.') {  
+task writeNewPom(type:Task, description: 'Writes pom.xml using merged Gradle dependency and MavenPom configuration.') {
     ext.pomDefinition = pom {
-	configurations {
-		// avoiding test dependencies in generated pom
-		compile
-		runtime
-	}
+        configurations {
+            // avoiding test dependencies in generated pom
+            compile
+            runtime
+        }
 
-       project {
-         groupId  project.group
-         packaging 'maven-plugin'
-         name 'Enhance Plugin of the Hibernate project for use with Maven build system.'
-         build {
-             plugins {
-                 plugin { 
-                    groupId 'org.apache.maven.plugins'
-                    artifactId 'maven-plugin-plugin'
-                    version '3.2'
-                    configuration {
-                       skipErrorNoDescriptorsFound 'true'
-                    }
-                    executions {
-                        execution {
-                            id 'mojo-descriptor'
-                            goals {
-                                goal 'descriptor'
-                            }
-                        }
-                    }
-                 }
-             }
-         }
-         properties {
-            'project.build.sourceEncoding' 'UTF-8'
-         }
-      }
+        project {
+            groupId project.group
+            packaging 'maven-plugin'
+            name 'Enhance Plugin of the Hibernate project for use with Maven build system.'
+//            build {
+//                plugins {
+//                    plugin {
+//                        groupId 'org.apache.maven.plugins'
+//                        artifactId 'maven-plugin-plugin'
+//                        version '3.2'
+//                        configuration {
+//                            skipErrorNoDescriptorsFound 'true'
+//                        }
+//                        executions {
+//                            execution {
+//                                id 'mojo-descriptor'
+//                                goals {
+//                                    goal 'descriptor'
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+            properties {
+                'project.build.sourceEncoding' 'UTF-8'
+            }
+        }
     }
     ext.pomDefinition.writeTo("$projectDir/src/main/resources/pom.xml")
 }

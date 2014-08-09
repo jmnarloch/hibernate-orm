@@ -34,14 +34,7 @@ import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.NClob;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.EntityNotFoundException;
 
 import org.hibernate.AssertionFailure;
@@ -1032,8 +1025,28 @@ public final class SessionImpl extends AbstractSessionImpl implements EventSourc
 	public Object get(String entityName, Serializable id, LockOptions lockOptions) throws HibernateException {
 		return this.byId( entityName ).with( lockOptions ).load( id );
 	}
-	
-	@Override
+
+    @Override
+    public Optional<?> getOptional(Class clazz, Serializable id) {
+        return Optional.ofNullable(this.get(clazz, id));
+    }
+
+    @Override
+    public Optional<?> getOptional(Class clazz, Serializable id, LockOptions lockOptions) {
+        return Optional.ofNullable(this.get(clazz, id));
+    }
+
+    @Override
+    public Optional<?> getOptional(String entityName, Serializable id) {
+        return Optional.ofNullable(this.get(entityName, id));
+    }
+
+    @Override
+    public Optional<?> getOptional(String entityName, Serializable id, LockOptions lockOptions) {
+        return Optional.ofNullable(this.get(entityName, id, lockOptions));
+    }
+
+    @Override
 	public IdentifierLoadAccessImpl byId(String entityName) {
 		return new IdentifierLoadAccessImpl( entityName );
 	}

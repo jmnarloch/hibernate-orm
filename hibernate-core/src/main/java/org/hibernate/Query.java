@@ -26,13 +26,7 @@ package org.hibernate;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import org.hibernate.transform.ResultTransformer;
 import org.hibernate.type.Type;
@@ -291,6 +285,17 @@ public interface Query extends BasicQueryContract {
 	 * @throws NonUniqueResultException if there is more than one matching result
 	 */
 	public Object uniqueResult();
+
+    /**
+     * Returns a single optional instance that matches the query, if non element
+     * matches the query the optional result will not be present - {@link Optional#isPresent()}
+     * returning {@code false}.
+     *
+     * @return the single optional result
+     *
+     * @throws NonUniqueResultException if there is more than one matching result
+     */
+    public Optional<?> optionalResult();
 
 	/**
 	 * Execute the update or delete statement.

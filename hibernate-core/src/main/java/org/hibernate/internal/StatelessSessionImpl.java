@@ -25,10 +25,7 @@ package org.hibernate.internal;
 
 import java.io.Serializable;
 import java.sql.Connection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.hibernate.CacheMode;
 import org.hibernate.ConnectionReleaseMode;
@@ -206,7 +203,27 @@ public class StatelessSessionImpl extends AbstractSessionImpl implements Statele
 		return get( entityClass.getName(), id, lockMode );
 	}
 
-	@Override
+    @Override
+    public Optional<?> getOptional(String entityName, Serializable id) {
+        return Optional.ofNullable(this.get(entityName, id));
+    }
+
+    @Override
+    public Optional<?> getOptional(Class entityClass, Serializable id) {
+        return Optional.ofNullable(this.get(entityClass, id));
+    }
+
+    @Override
+    public Optional<?> getOptional(String entityName, Serializable id, LockMode lockMode) {
+        return Optional.ofNullable(this.get(entityName, id, lockMode));
+    }
+
+    @Override
+    public Optional<?> getOptional(Class entityClass, Serializable id, LockMode lockMode) {
+        return Optional.ofNullable(this.get(entityClass, id, lockMode));
+    }
+
+    @Override
 	public Object get(String entityName, Serializable id) {
 		return get(entityName, id, LockMode.NONE);
 	}
